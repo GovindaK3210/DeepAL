@@ -55,19 +55,19 @@ Few by-product utilitiese were also created such as:
 
 #### Plots Alpha Approach
 
-- Raw                          ![raw](images\raw.png)
+- Raw                          ![raw](images/raw.png)
 
 
 
-- Raw + Face + Hand ![raw-face-hand](images\raw-face-hand.png)
+- Raw + Face + Hand ![raw-face-hand](images/raw-face-hand.png)
 
 
 
 #### Plots Beta Approach
 
-- Raw + Face                ![raw-face](images\raw-face.png)
+- Raw + Face                ![raw-face](images/raw-face.png)
 
-- Raw + Hand               ![raw-hand](images\raw-hand.png)
+- Raw + Hand               ![raw-hand](images/raw-hand.png)
 
 
 
@@ -81,19 +81,19 @@ Few by-product utilitiese were also created such as:
 
 **Ahsan Abbas**
 
-![813](images\813.jpg)
+![813](images/813.jpg)
 
 
 
 **Muhammad Arslan**
 
-![IMG_5730_Frame84](images\IMG_5730_Frame84.jpg)
+![IMG_5730_Frame84](images/IMG_5730_Frame84.jpg)
 
 
 
 **Govinda Kumar**
 
-![VID2019120216265238](images\VID2019120216265238.jpg)
+![VID2019120216265238](images/VID2019120216265238.jpg)
 
 
 
