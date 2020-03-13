@@ -58,24 +58,20 @@ Few by-product utilitiese were also created such as:
 
 #### Plots Alpha Approach
 
-- Raw                          
+Raw                          
 ![raw](images/raw.png)
 
-
-
-- Raw + Face + Hand 
+Raw + Face + Hand 
 ![raw-face-hand](images/raw-face-hand.png)
-
 
 
 #### Plots Beta Approach
 
-- Raw + Face                
+Raw + Face                
 ![raw-face](images/raw-face.png)
 
-- Raw + Hand               
+Raw + Hand               
 ![raw-hand](images/raw-hand.png)
-
 
 
 
@@ -84,7 +80,6 @@ Few by-product utilitiese were also created such as:
 ### Creators
 
 ------
-
 
 
 **Ahsan Abbas**
