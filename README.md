@@ -55,19 +55,19 @@ Few by-product utilitiese were also created such as:
 
 #### Plots Alpha Approach
 
-- Raw                          ![raw](F:\8th Semester\CS492 - Project - II\graphs\loss_final\loss\alpha\raw.png)
+- Raw                          ![](images\raw.png)
 
 
 
-- Raw + Face + Hand ![raw-face-hand](F:\8th Semester\CS492 - Project - II\graphs\loss_final\loss\alpha\raw-face-hand.png)
+- Raw + Face + Hand ![](images\raw-face-hand.png)
 
 
 
 #### Plots Beta Approach
 
-- Raw + Face                ![raw-face](F:\8th Semester\CS492 - Project - II\graphs\loss_final\loss\beta\raw-face.png)
+- Raw + Face                ![](images\raw-face.png)
 
-- Raw + Hand               ![raw-hand](F:\8th Semester\CS492 - Project - II\graphs\loss_final\loss\beta\raw-hand.png)
+- Raw + Hand               ![](images\raw-hand.png)
 
 
 
@@ -81,19 +81,19 @@ Few by-product utilitiese were also created such as:
 
 **Ahsan Abbas**
 
-![813](E:\FYP_Data\ahsan usb\train\NonFalling\813.jpg)
+![](images\813.jpg)
 
 
 
 **Muhammad Arslan**
 
-![IMG_5730_Frame84](E:\FYP_Data\color_arslan_train\NonFalling\IMG_5730\IMG_5730_Frame84.jpg)
+![](images\IMG_5730_Frame84.jpg)
 
 
 
 **Govinda Kumar**
 
-![VID2019120216265238](E:\FYP_Data\train_m\NonFalling\VID2019120216265238.jpg)
+![](images\VID2019120216265238.jpg)
 
 
 
