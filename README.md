@@ -58,20 +58,21 @@ Few by-product utilitiese were also created such as:
 
 #### Plots Alpha Approach
 
-Raw                          
-![raw](images/raw.png)
+- Raw
+<img src="images/raw.png" width="450" height="300">
 
-Raw + Face + Hand 
-![raw-face-hand](images/raw-face-hand.png)
+- Raw + Face + Hand
+<img src="images/raw-face-hand.png" width="450" height="300">
 
 
 #### Plots Beta Approach
 
-Raw + Face                
-![raw-face](images/raw-face.png)
+- Raw + Face
+<img src="images/raw-face.png" width="450" height="300">
 
-Raw + Hand               
-![raw-hand](images/raw-hand.png)
+- Raw + Hand
+<img src="images/raw-hand.png" width="450" height="300">
+
 
 
 
@@ -82,23 +83,31 @@ Raw + Hand
 ------
 
 
-**Ahsan Abbas**
 
-![813](images/813.jpg)
-
-
-
-**Muhammad Arslan**
-
-![IMG_5730_Frame84](images/IMG_5730_Frame84.jpg)
-
-
-
-**Govinda Kumar**
-
-![VID2019120216265238](images/VID2019120216265238.jpg)
-
-
+<table>
+    <td>
+      <h3>
+        Ahsan Abbas
+  </h3>
+        <img src="images/813.jpg" width="300" height="300">
+    </td>
+  
+   <td>
+  <h3>
+        Muhammad Arslan
+  </h3>
+        <img src="images/IMG_5730_Frame84.jpg" width="300" height="300">
+   </td>
+   
+   <td>
+  <h3>
+        Govinda Kumar
+  </h3>
+        <img src="images/VID2019120216265238.jpg" width="300" height="300">
+    </td> 
+    
+       
+</table>
 
 
 ### Final Year Project
@@ -107,9 +116,12 @@ Raw + Hand
 
 This is our final year project for Bachelors of Computer Science 2020.
 
-**Group Members:							Supervisor:**
+**Supervisor:**
+> Dr Omer Ishaq
 
-> Ahsan Abbas									Dr Omer Ishaq
+**Group Members:**
+
+> Ahsan Abbas
 
 > Muhammad Arslan 
 
