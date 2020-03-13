@@ -12,6 +12,7 @@ This project classifies human activities such as human falling and non-falling i
 
 
 
+
 ### Models
 
 ------
@@ -21,6 +22,7 @@ This project classifies human activities such as human falling and non-falling i
 - AlphaPose for Key-point Estimations
 
 - Resnet50 for classification of falling and non-falling
+
 
 
 
@@ -49,25 +51,31 @@ Few by-product utilitiese were also created such as:
 
 
 
+
 ### Results
 
 ------
 
 #### Plots Alpha Approach
 
-- Raw                          ![raw](images/raw.png)
+- Raw                          
+![raw](images/raw.png)
 
 
 
-- Raw + Face + Hand ![raw-face-hand](images/raw-face-hand.png)
+- Raw + Face + Hand 
+![raw-face-hand](images/raw-face-hand.png)
 
 
 
 #### Plots Beta Approach
 
-- Raw + Face                ![raw-face](images/raw-face.png)
+- Raw + Face                
+![raw-face](images/raw-face.png)
 
-- Raw + Hand               ![raw-hand](images/raw-hand.png)
+- Raw + Hand               
+![raw-hand](images/raw-hand.png)
+
 
 
 
@@ -94,6 +102,7 @@ Few by-product utilitiese were also created such as:
 **Govinda Kumar**
 
 ![VID2019120216265238](images/VID2019120216265238.jpg)
+
 
 
 
