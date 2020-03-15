@@ -30,7 +30,7 @@ This project classifies human activities such as human falling and non-falling i
 
 ------
 
-*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for both image and video files and when passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling.
+*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for both image and video files and when passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling. The weights can be found [here](https://drive.google.com/open?id=1V3DrJsDEGXWdwETtMQY1hGtkkYwCNgIW)
 
 #### <u>Testing</u>
 
