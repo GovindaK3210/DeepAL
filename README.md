@@ -30,7 +30,7 @@ This project classifies human activities such as human falling and non-falling i
 
 ------
 
-*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for both image and video files and when passed through this file, the results images are labelled at the top left of the image with the models precited class i.e Falling or Non-Falling.
+*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for both image and video files and when passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling.
 
 #### <u>Testing</u>
 
@@ -44,7 +44,7 @@ This project classifies human activities such as human falling and non-falling i
 
 #### <u>Utils</u>
 
-Few by-product utilitiese were also created such as:
+Few by-product utilities were also created such as:
 
 - Detect only hands and face on a image can be done via utils/detectHandsFaces.ipynb
 - Extracting frames from videos and storing them to given destination can be achieved via utils/ExtractFrames.ipynb
