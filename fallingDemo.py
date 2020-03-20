@@ -19,6 +19,8 @@ parser.add_argument('--image', help='Path to image file.')
 parser.add_argument('--video', help='Path to video file.')
 
 parser.add_argument('--size', help='size of frames')
+parser.add_argument('--mirror', default=True,help='Mirror webcam')
+
 args = parser.parse_args()
 
 print ("I AM HERE ")
@@ -51,24 +53,22 @@ def draw_label(frame , label):
     lineType               = 2
     thickness              = -1
 
+    # Draw white background rectangle
     frame = cv.rectangle(frame, (10,10), endpoint, (255,255,255), -1)
 
-    cv.putText(frame,lbl, 
-    topLeftCornerOfText, 
-    font, 
-    fontScale,
-    fontColor,
-    lineType,
-    thickness)
+    # Draw label on white rectangle 
+    cv.putText(frame,lbl, topLeftCornerOfText, font, fontScale,fontColor,lineType,thickness)
 
     return frame
 
+
 device = 'cuda'
+# Load network
 net = load_network(args.weight).to(device)
 Q = deque(maxlen=int(args.size))
 
 # Process inputs
-winName = 'Deep learning object detection in OpenCV'
+winName = 'DeepAL Fall Detection'
 #cv.namedWindow(winName, cv.WINDOW_NORMAL)
 outputFile = "resnet_out_py.avi"
 if (args.image):
@@ -92,7 +92,7 @@ else:
     cap = cv.VideoCapture(0)
 
 # Get the video writer initialized to save the output video
-if (not args.image):
+if (args.video):
     vid_writer = cv.VideoWriter(outputFile, cv.VideoWriter_fourcc('M','J','P','G'), 30, (round(cap.get(cv.CAP_PROP_FRAME_WIDTH)),round(cap.get(cv.CAP_PROP_FRAME_HEIGHT))))
 
 #epoch = 45
@@ -119,29 +119,31 @@ while cv.waitKey(1) < 0:
     frame_ = torch.from_numpy(blob).float().to(device)
     #frame_ = frame_.Resize((224,224))
     
+    # Pass the frame through network
     with torch.set_grad_enabled(False):
         predictions = net(frame_)
     
-    
+    # Label Averaging 
     values, indices = predictions.max(1)
     Q.append(np.array(predictions.to('cpu')))
 
     results = np.array(Q).mean(axis=0)
     i = np.argmax(results)
 
-    #print(indices)
-
     # Put label on frame
     draw_label(frame,i)
     
-
-
+    # Output
     if (args.image):
         cv.imwrite(outputFile, frame.astype(np.uint8))
-    else:
-        #@count+=1 
-        #if (count==3 ):
-
+    elif(args.video):
         vid_writer.write(frame.astype(np.uint8))
+    else:
+        if( args.mirror ):
+            frame = cv.flip(frame,1)
+        
+        cv.imshow(winName, frame)
+        if cv.waitKey(1) == 27:
+            break
 
-    # cv.imshow(winName, frame)
+cv.destroyAllWindows()
