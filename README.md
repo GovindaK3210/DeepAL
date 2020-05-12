@@ -30,17 +30,33 @@ This project classifies human activities such as human falling and non-falling i
 
 ------
 
-*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for both image and video files and when passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling. The weights can be found [here](https://drive.google.com/open?id=1V3DrJsDEGXWdwETtMQY1hGtkkYwCNgIW)
+*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for image, video and webcam. When passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling. The weights can be found [here](https://drive.google.com/open?id=1V3DrJsDEGXWdwETtMQY1hGtkkYwCNgIW)
 
 #### <u>Testing</u>
 
 - For image
 
-`python fallingDemo.py --weight <PathToWeight> --image <PathToImage>`
+`python fallingDemo.py --weight <PathToWeight> --image <PathToImage> --model ###`
 
 - For video
 
-`python fallingDemo.py --weight <PathToWeight> --video <PathToVideo>`
+`python fallingDemo.py --weight <PathToWeight> --video <PathToVideo> --model ###`
+
+- For webcam
+
+`python fallingDemo.py --weight <PathToWeight> --model ###`
+
+#### <u>Arguments</u>
+
+- --model
+2nd place bit - Face , 1st place bit - Hand , 0th place bit - Pose
+Enable or disable the bit for model selection.
+
+- --size
+integer size for label averaging (default 5)
+
+- --mirror
+flip the webcam frame 
 
 #### <u>Utils</u>
 

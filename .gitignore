@@ -1,0 +1,10 @@
+*.npy
+*.so
+*.pyc
+.ipynb_checkpoints
+*/.ipynb_checkpoints/
+
+*.pth
+*.h5
+*.zip
+*.weights
