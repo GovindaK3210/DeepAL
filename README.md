@@ -99,18 +99,18 @@ Few by-product utilities were also created such as:
 ##### Plots Alpha Approach
 
 - Raw
-  <img src="images/c_raw.png" width="450" height="300">
+<img src="images/c_raw.png" width="450" height="300">
 
 - Raw + Face + Hand
-  <img src="images/c_raw-face-hand.png" width="450" height="300">
+<img src="images/c_raw-face-hand.png" width="450" height="300">
 
 
 ##### Plots Beta Approach
 
 - Raw + Face
-  <img src="images/c_raw-face.png" width="450" height="300">
+<img src="images/c_raw-face.png" width="450" height="300">
 - Raw + Hand
-  <img src="images/c_raw-hand.png" width="450" height="300">
+<img src="images/c_raw-hand.png" width="450" height="300">
 
 
 ### Creators
