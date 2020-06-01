@@ -1,6 +1,6 @@
 
-# Usage example:  python3 object_detection_yolo.py --video=run.mp4
-#                 python3 object_detection_yolo.py --image=bird.jpg
+# python fallingDemo.py --weight <PathToWeight> --image <PathToImage> --model ### !! this will save the image 
+# python fallingDemo.py --weight <PathToWeight> --video <PathToVideo> --model ### !! this will save the video
 
 import cv2 as cv
 import argparse
