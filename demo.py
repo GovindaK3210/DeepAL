@@ -1,6 +1,6 @@
 
-# python fallingDemo.py --weight <PathToWeight> --image <PathToImage> --model ### !! this will save the image 
-# python fallingDemo.py --weight <PathToWeight> --video <PathToVideo> --model ### !! this will save the video
+# Usage example:  python3 object_detection_yolo.py --video=run.mp4
+#                 python3 object_detection_yolo.py --image=bird.jpg
 
 import cv2 as cv
 import argparse
@@ -10,13 +10,14 @@ import os.path
 import torch
 from collections import deque
 from yolo_face_hand import load_network, execute_get_heatmap
+import torchvision.transforms as transforms
 #import thread
 
 import sys
 sys.path.insert(1,'./AlphaPose')
 
-from pose import *
-
+from AlphaPose.opt import opt
+args = opt
 
 #import threading
 #import concurrent.futures
@@ -27,65 +28,93 @@ import concurrent.futures
 inpWidth = 224  #608     #Width of network's input image
 inpHeight = 224 #608     #Height of network's input image
 
-#parser = argparse.ArgumentParser(description='Fall Detection using Resnet in OPENCV')
-#pose.opt.add_argument('--weight', help='Path to weight file.')
-#parser.add_argument('--image', help='Path to image file.')
-#parser.add_argument('--video', help='Path to video file.')
-#parser.add_argument('--model', default="000",help='Model to execute.')
-
-#parser.add_argument('--size', default=5, help='size of frames')
-#parser.add_argument('--mirror', default=True,help='Mirror webcam')
-
-#args = parser.parse_args()
-
-print ("I AM HERE ")
 
 
-def draw_label(frame , label):
-    if label == 0:
-        lbl = 'Falling'
-        endpoint = (320,150)
+def draw_label(frame , label, model):
+    if model == "Fall":
+        if label == 0:
+            lbl = 'Falling'
+        else:
+            lbl = 'Non Falling'
+        backgroundStartPoint = (0,10)
+        backgroundEndPoint = (200,50)
+        textStartPosition = (10,40)
+        
     else:
-        lbl = 'Non Falling'
-        endpoint = (550,150)
+        if label == 0:
+            lbl = 'Choking'
+        else:
+            lbl = 'Non Choking'
+        height, width, channels = frame.shape
+        backgroundStartPoint = (width-210,10)
+        backgroundEndPoint = (width,50)
+        textStartPosition = (width-200-5,40)
 
     font                   = cv.FONT_HERSHEY_SIMPLEX
-    topLeftCornerOfText    = (20,100)
-    fontScale              = 3
+    fontScale              = 1
     fontColor              = (0,128,0)
     lineType               = 2
     thickness              = -1
 
     # Draw white background rectangle
-    frame = cv.rectangle(frame, (10,10), endpoint, (255,255,255), -1)
+    frame = cv.rectangle(frame, backgroundStartPoint, backgroundEndPoint, (255,255,255), -1)
 
     # Draw label on white rectangle 
-    cv.putText(frame,lbl, topLeftCornerOfText, font, fontScale,fontColor,lineType,thickness)
+    cv.putText(frame,lbl, textStartPosition, font, fontScale,fontColor,lineType,thickness)
 
     return frame
 
+"""
+    frame   : original frame
+    frame_  : augmented frame
+    net     : network to pass frame
+    Q       : queue
+    model   : Fall/Choke
+"""
+def modelPrediction(frame,frame_,net, Q , model):
+    with torch.set_grad_enabled(False):
+        predictions = net(frame_)
 
-if len(args.model) != 3:
-    print("Invalid Model..\nExiting..")
+    # Label Averaging 
+    values, indices = predictions.max(1)
+    Q.append(np.array(predictions.to('cpu')))
+
+    results = np.array(Q).mean(axis=0)
+    i = np.argmax(results)
+
+    # Put label on frame
+    return draw_label(frame,i, model)
+
+#-----------------------------------------------------------------------------------------------
+# Handle Arguments
+#-----------------------------------------------------------------------------------------------
+
+if len(args.aug) != 3:
+    print("Invalid Augmentation..\nExiting..")
+    exit(-1)
+
+if args.weightF is None and args.weightC is None:
+    print("No Model Selected..\nExiting..")
     exit(-1)
 
 
-#check_output("python","aug/yolo.py",)
+#-----------------------------------------------------------------------------------------------
+# Handle Augmentation Models
+#-----------------------------------------------------------------------------------------------
 
-classesFile_hand = 'Yolo-FaceHand/hand/classes.names'
-cfg_hand = 'Yolo-FaceHand/hand/darknet-yolov3.cfg'
-weights_hand = 'Yolo-FaceHand/hand/darknet-yolov3_1100.weights'
-classesFile_face = 'Yolo-FaceHand/face/classes.names'
-cfg_face = 'Yolo-FaceHand/face/darknet-yolov3.cfg'
-weights_face = 'Yolo-FaceHand/face/darknet-yolov3_1000.weights'
-
-if args.model[0] == '1':
+if args.aug[0] == '1':        # Load Face YOLO Model
+    classesFile_face = 'Yolo-FaceHand/face/classes.names'
+    cfg_face = 'Yolo-FaceHand/face/darknet-yolov3.cfg'
+    weights_face = 'Yolo-FaceHand/face/darknet-yolov3_1000.weights'
     face_net, face_classes = load_network(classesFile_face,cfg_face,weights_face)
-if args.model[1] == '1':
+if args.aug[1] == '1':        # Load Hand YOLO Model
+    classesFile_hand = 'Yolo-FaceHand/hand/classes.names'
+    cfg_hand = 'Yolo-FaceHand/hand/darknet-yolov3.cfg'
+    weights_hand = 'Yolo-FaceHand/hand/darknet-yolov3_1100.weights'
     hand_net , hand_classes= load_network(classesFile_hand,cfg_hand,weights_hand)
-if args.model[2] == '1':
-    
-    det_loader = DetectionLoader(None, batchSize=1) # YOLO Loaded
+if args.aug[2] == '1':        # Load AlphaPose model
+    from pose import *
+    det_loader = DetectionLoader(None, batchSize=1) # YOLO Loaded for Human Detection
     sys.stdout.flush()
     # Load pose model
     pose_dataset = Mscoco()
@@ -97,27 +126,28 @@ if args.model[2] == '1':
     pose_model.eval()
 
 
-# Load input images
-#data_loader = ModifiedImageLoader(image, batchSize=args.detbatch, format='yolo').start()
-# Load detection loader
-#print('Loading YOLO model..')
-
-
+#-----------------------------------------------------------------------------------------------
+# Handle Fall/Choke Models
+#-----------------------------------------------------------------------------------------------
 
 transform = transforms.Compose([
                       #transforms.Resize((224,224)),
                       transforms.ToTensor()
                             ])
 
-threads = []
 
 device = 'cuda'
 # Load network
-net = torch.load(args.weight).to(device)
-Q = deque(maxlen=int(args.size))
+if args.weightF is not None:
+    net_f = torch.load(args.weightF).to(device)
+if args.weightC is not None:
+    net_c = torch.load(args.weightC).to(device)
 
+# Queue for label averaging
+Q_f = deque(maxlen=int(args.size))
+Q_c = deque(maxlen=int(args.size))
 # Process inputs
-winName = 'DeepAL Fall Detection'
+winName = 'DeepAL Detection'
 #cv.namedWindow(winName, cv.WINDOW_NORMAL)
 outputFile = "resnet_out_py.avi"
 if (args.image):
@@ -163,20 +193,20 @@ while cv.waitKey(1) < 0:
         cv.waitKey(3000)
         break
 
-    frame_ = cv2.resize(frame,(224,224))
+    frame_ = cv.resize(frame,(224,224))
 
     # TODO threading
     with concurrent.futures.ThreadPoolExecutor() as executor:
-        if args.model[0] == '1':
+        if args.aug[0] == '1':
             face_thread_return = executor.submit(execute_get_heatmap, face_net,face_classes,frame)
             #face_heatmap = thread_return.result()
             #face_heatmap = execute_get_heatmap(face_net,face_classes,frame)
             #face_heatmap = np.stack([ np.array(face_heatmap.resize((224,224))) ], axis=2)
-        if args.model[1] == '1':
+        if args.aug[1] == '1':
             hand_thread_return = executor.submit(execute_get_heatmap, hand_net,hand_classes,frame)
             #hand_heatmap = execute_get_heatmap(hand_net,hand_classes,frame)
             #hand_heatmap = np.stack([ np.array(hand_heatmap.resize((224,224))) ], axis=2)
-        if args.model[2] == '1':
+        if args.aug[2] == '1':
             data_loader = ModifiedImageLoader(frame, batchSize=1, format='yolo')
             data_loader.getitem_yolo()
             det_loader.dataloder = data_loader
@@ -188,15 +218,15 @@ while cv.waitKey(1) < 0:
             #hm_pose = np.stack([ x.resize((224,224)) for x in pose_heatmaps ], axis=2)
 
         # This Needs to Be sequential
-        if args.model[0] == '1':
+        if args.aug[0] == '1':
             face_heatmap = face_thread_return.result()
             face_heatmap = np.stack([ np.array(face_heatmap.resize((224,224))) ], axis=2)
             frame_ = np.concatenate((frame_,face_heatmap),axis=2)
-        if args.model[1] == '1':
+        if args.aug[1] == '1':
             hand_heatmap = hand_thread_return.result()
             hand_heatmap = np.stack([ np.array(hand_heatmap.resize((224,224))) ], axis=2)
             frame_ = np.concatenate((frame_,hand_heatmap),axis=2)
-        if args.model[2] == '1':
+        if args.aug[2] == '1':
             pose_heatmaps = pose_thread_return.result()
             hm_pose = np.stack([ x.resize((224,224)) for x in pose_heatmaps ], axis=2)
             frame_ = np.concatenate((frame_,hm_pose),axis=2)
@@ -214,20 +244,11 @@ while cv.waitKey(1) < 0:
     #frame_ = torch.from_numpy(frame).float().to(device)
     #frame_ = frame_.Resize((224,224))
     
-    # Pass the frame through network
-    with torch.set_grad_enabled(False):
-        predictions = net(frame_)
-    
-    # Label Averaging 
-    values, indices = predictions.max(1)
-    Q.append(np.array(predictions.to('cpu')))
-
-    results = np.array(Q).mean(axis=0)
-    i = np.argmax(results)
-
-    # Put label on frame
-    draw_label(frame,i)
-    
+    if args.weightF is not None:
+        frame = modelPrediction(frame,frame_,net_f,Q_f,"Fall")
+    if args.weightC is not None:
+        frame = modelPrediction(frame,frame_,net_c,Q_c,"Choke")
+      
     # Output
     if (args.image):
         cv.imwrite(outputFile, frame.astype(np.uint8))

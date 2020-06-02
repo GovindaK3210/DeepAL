@@ -8,7 +8,7 @@
 
 ------
 
-This project classifies human activities such as human falling and non-falling in order to detect the problems which are most specifically faced by elderly people. The model proposed by this project uses the data which has been augmented by adding additional features introduced by the face, hand positions and keypoint models. We tackle the task component of increasing the accuracy of a model by training it on a small and structured dataset through data augmentation.
+This project classifies human activities such as human falling and human choking in order to detect the problems which are most specifically faced by elderly people. The model proposed by this project uses the data which has been augmented by adding additional features introduced by the face, hand positions and keypoint models. We tackle the task component of increasing the accuracy of a model by training it on a small and structured dataset through data augmentation.
 
 
 
@@ -21,7 +21,7 @@ This project classifies human activities such as human falling and non-falling i
 
 - AlphaPose for Key-point Estimations
 
-- Resnet50 for classification of falling and non-falling
+- Resnet50 for classification of falling/non-falling and choking/non-choking
 
 
 
@@ -30,25 +30,31 @@ This project classifies human activities such as human falling and non-falling i
 
 ------
 
-*fallingDemo.py* is the output file for testing the model on any of its weights. Testing works for image, video and webcam. When passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling. The weights can be found [here](https://drive.google.com/open?id=1V3DrJsDEGXWdwETtMQY1hGtkkYwCNgIW)
+*demo.py* is the output file for testing the model on any of its weights. Testing works for image, video and webcam. When passed through this file, the results images are labelled at the top left of the image with the models predicted class i.e Falling or Non-Falling. The weights can be found [here](https://drive.google.com/open?id=1V3DrJsDEGXWdwETtMQY1hGtkkYwCNgIW)
 
 #### <u>Testing</u>
 
 - For image
 
-`python fallingDemo.py --weight <PathToWeight> --image <PathToImage> --model ###`
+`python demo.py --weightF <PathToWeightFall> --image <PathToImage> --aug ###`
 
 - For video
 
-`python fallingDemo.py --weight <PathToWeight> --video <PathToVideo> --model ###`
+`python demo.py --weightF <PathToWeightFall> --video <PathToVideo> --aug ###`
 
 - For webcam
 
-`python fallingDemo.py --weight <PathToWeight> --model ###`
+`python demo.py --weightF <PathToWeightFall> --aug ###`
 
 #### <u>Arguments</u>
 
-- --model
+--weightF
+Path to weight file of Falling model
+
+--weightC
+Path to weight file of Choking model
+
+- --aug
 2nd place bit - Face , 1st place bit - Hand , 0th place bit - Pose
 Enable or disable the bit for model selection.
 
@@ -154,6 +160,7 @@ This is our final year project for Bachelors of Computer Science 2020.
 
 **Supervisor:**
 > Dr Omer Ishaq
+> Dr Kashif Saghar
 
 **Group Members:**
 

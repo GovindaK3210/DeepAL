@@ -4,10 +4,13 @@ import torch
 parser = argparse.ArgumentParser(description='PyTorch Our Training')
 
 
-parser.add_argument('--weight', help='Path to weight file.')
+parser.add_argument('--weightF', help='Path to fall weight file.')
+parser.add_argument('--weightC', help='Path to fall weight file.')
 parser.add_argument('--image', help='Path to image file.')
 parser.add_argument('--video', help='Path to video file.')
-parser.add_argument('--model', default="000",help='Model to execute.')
+parser.add_argument('--aug', default="000",help='Augmentation to add.')
+
+
 
 parser.add_argument('--size', default=5, help='size of frames')
 parser.add_argument('--mirror', default=True,help='Mirror webcam')
