@@ -1,0 +1,19 @@
+RAW 
+Accuracy : 0.894
+EPOCH : 91
+
+RAWFACE
+ACCURACY : 0.794
+EPOCH : 86
+
+RAWHAND 
+Accuracy : 0.847
+EPOCH : 93
+
+RAWFACEHAND
+Accuracy : 0.868
+EPOCH : 87
+
+RAWFACEHANDPOSE
+Accuracy : 0.865
+EPOCH : 73
